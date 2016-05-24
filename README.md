@@ -163,3 +163,7 @@ We have to handle the delete key, when input new character, when fill all charac
 - Delete key: clear text, activate the current character and deactivate the previous character view. Make sure your character index will not out of index. View detail in the sample project. 
 - Add new character: add text to current character, active next character. 
 - Auto execute the method: check the count of character, use `stringByReplacingCharactersInRange` to create new text and execute the method. 
+
+####Improvement 
+- The code doesn't work good on iPhone 6+, the font size is a little small. 
+- The recursion code makes the performance down a lot. 
