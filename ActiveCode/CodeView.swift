@@ -21,6 +21,8 @@ class CharacterView: UIView {
     private var codeLabel : UILabel!
     private var underlineView: UIView!
     
+    required init?(coder aDecoder: NSCoder) { super.init(coder: aDecoder) }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCode()
@@ -41,15 +43,15 @@ class CharacterView: UIView {
             y: codeLabel.frame.origin.y + codeLabel.frame.height + 4,
             width: codeLabel.frame.width,
             height: codeLabel.frame.width / 10))
-        underlineView.backgroundColor = UIColor.lightGrayColor()
+        underlineView.backgroundColor = Color.inactiveColor
         self.addSubview(underlineView)
     }
     
-    required init?(coder aDecoder: NSCoder) { super.init(coder: aDecoder) }
+    func activate() { changeStateWithColor(Color.activeColor) }
     
-    func activate() { codeLabel.textColor = Color.activeColor; underlineView.backgroundColor = Color.activeColor; }
+    func deactivate() { changeStateWithColor(Color.inactiveColor) }
     
-    func deactivate() { codeLabel.textColor = Color.inactiveColor; underlineView.backgroundColor = Color.inactiveColor; }
+    private func changeStateWithColor(color: UIColor) { codeLabel.textColor = color; underlineView.backgroundColor = color; }
     
     func changeCodeWithString(string: String) { codeLabel.text = string }
 }
@@ -59,6 +61,7 @@ class CodeView: UIView, UITextFieldDelegate {
     var characterViews = [CharacterView]()
     var horizontalSpacing: CGFloat = 16
     var codeField = UITextField()
+    var validateCode: ((String) -> ())?
     
     required init?(coder aDecoder: NSCoder) { super.init(coder: aDecoder) }
     
@@ -71,15 +74,15 @@ class CodeView: UIView, UITextFieldDelegate {
         
         let value = calculateSizeForScreenBaseOnWidth(frame.width, numberOfCharacter: numberOfCharacter)
         let horizontalSpacing: CGFloat = value.spacing
-        let baseSize = value.baseSize
-        var labelX = calculateFirstLabelXBaseOnLabelWidth(baseSize.width,
+        let characterSize = value.chracterSize
+        var labelX = calculateFirstLabelXBaseOnLabelWidth(characterSize.width,
                                                           viewWidth: frame.width,
                                                           numberOfCharacter: numberOfCharacter,
                                                           horizontalSpacing: horizontalSpacing)
         
         for _ in 0 ..< numberOfCharacter {
-            self.addSubview(createCharacterViewWithSize(baseSize, atX: labelX))
-            labelX += horizontalSpacing + baseSize.width
+            self.addSubview(createCharacterViewWithSize(characterSize, atX: labelX))
+            labelX += horizontalSpacing + characterSize.width
         }
         
         activeCodeAtIndex(0)
@@ -93,15 +96,8 @@ class CodeView: UIView, UITextFieldDelegate {
         codeField.autocapitalizationType = UITextAutocapitalizationType.None
     }
     
-    private func createCharacterViewWithSize(size: CGSize, atX x: CGFloat) -> CharacterView {
-        let newFrame = CGRect(x: x, y: 0,
-                              width: size.width + 4, height: size.height)
-        let characterView = CharacterView(frame: newFrame)
-        characterViews.append(characterView)
-        return characterView
-    }
     
-    func calculateSizeForScreenBaseOnWidth(viewWidth: CGFloat, numberOfCharacter: Int) -> (baseSize: CGSize, spacing: CGFloat) {
+    func calculateSizeForScreenBaseOnWidth(viewWidth: CGFloat, numberOfCharacter: Int) -> (chracterSize: CGSize, spacing: CGFloat) {
         
         let baseSize = calculateSizeBaseOnFontSize(defaultFontSize)
         if viewWidth / CGFloat(numberOfCharacter) > baseSize.width + horizontalSpacing { return (baseSize, horizontalSpacing) }
@@ -128,6 +124,14 @@ class CodeView: UIView, UITextFieldDelegate {
         label.text = "0"
         label.sizeToFit()
         return CGSize(width: label.frame.width + 8, height: label.frame.height + 4)
+    }
+    
+    private func createCharacterViewWithSize(size: CGSize, atX x: CGFloat) -> CharacterView {
+        let newFrame = CGRect(x: x, y: 0,
+                              width: size.width + 4, height: size.height)
+        let characterView = CharacterView(frame: newFrame)
+        characterViews.append(characterView)
+        return characterView
     }
     
     func activeCodeAtIndex(index: Int, withString string: String) {
@@ -173,6 +177,10 @@ class CodeView: UIView, UITextFieldDelegate {
         if codeLength + 1 == characterViews.count {
             let code = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
             print("validate code \(code)")
+            if let validateCode = validateCode {
+                
+                validateCode(code)
+            }
         }
         
         return true
