@@ -15,8 +15,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         // Add code view programmatically
 //        codeView.removeFromSuperview()
 //        addCodeViewProgrammatically()
