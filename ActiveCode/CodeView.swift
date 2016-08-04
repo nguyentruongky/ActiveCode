@@ -102,12 +102,13 @@ class CodeView: UIView, UITextFieldDelegate {
     
     private func setupView() {
         
+        let viewWidth = UIScreen.mainScreen().bounds.width
         setupCodeField()
-        let value = calculateSizeForScreenBaseOnWidth(frame.width, numberOfCharacter: numberOfCharacter)
+        let value = calculateSizeForScreenBaseOnWidth(viewWidth, numberOfCharacter: numberOfCharacter)
         let horizontalSpacing: CGFloat = value.spacing
         let characterSize = value.chracterSize
         var labelX = calculateFirstLabelXBaseOnLabelWidth(characterSize.width,
-                                                          viewWidth: frame.width,
+                                                          viewWidth: viewWidth,
                                                           numberOfCharacter: numberOfCharacter,
                                                           horizontalSpacing: horizontalSpacing)
         

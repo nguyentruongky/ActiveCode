@@ -15,12 +15,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Code view by IB
-//        codeView.numberOfCharacter = 6
+        
         
         // Add code view programmatically
-        codeView.removeFromSuperview()
-        addCodeViewProgrammatically()
+//        codeView.removeFromSuperview()
+//        addCodeViewProgrammatically()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // Code view by IB
+        codeView.numberOfCharacter = 6
     }
     
     func addCodeViewProgrammatically() {
