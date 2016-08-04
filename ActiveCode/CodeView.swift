@@ -42,7 +42,7 @@ class CharacterView: UIView {
         codeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         codeLabel.font = UIFont.systemFontOfSize(defaultFontSize)
         codeLabel.textAlignment = NSTextAlignment.Center
-        self.addSubview(codeLabel)
+        addSubview(codeLabel)
     }
     
     private func setupUnderline() {
@@ -52,7 +52,7 @@ class CharacterView: UIView {
             width: codeLabel.frame.width,
             height: codeLabel.frame.width / 10))
         underlineView.backgroundColor = Color.inactiveColor
-        self.addSubview(underlineView)
+        addSubview(underlineView)
     }
     
     private func changeStateWithColor(color: UIColor) { codeLabel.textColor = color; underlineView.backgroundColor = color; }
@@ -158,7 +158,7 @@ class CodeView: UIView, UITextFieldDelegate {
     }
     
     private func createCharacterViewWithSize(size: CGSize, atX x: CGFloat) -> CharacterView {
-        let newFrame = CGRect(x: x, y: 0,
+        let newFrame = CGRect(x: x, y: (frame.height - size.height) / 2 - 4,
                               width: size.width + 4, height: size.height)
         let characterView = CharacterView(frame: newFrame)
         characterViews.append(characterView)
