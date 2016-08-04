@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Code view by IB
         codeView.numberOfCharacter = 6
+        addValidateFunction(codeView1)
     }
     
     func addCodeViewProgrammatically() {
