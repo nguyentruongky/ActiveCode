@@ -19,9 +19,13 @@ Create a code input view to validate when forgot password or activate to complet
 
 - Copy the `CodeView.swift` to your project
 - Use 1 of 3 ways: 
+
 	a. Change subclass on IB
+	
 	b. Add programmatically with init(frame)
+	
 	c. Add programmatically with init(frame:numberOfCharacter)
+
 - Change the number of character (default is 4)
 
 		codeView.numberOfCharacter = 6
