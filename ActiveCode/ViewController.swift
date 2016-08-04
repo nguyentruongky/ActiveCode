@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         // Code view by IB
         codeView.numberOfCharacter = 6
         addValidateFunction(codeView)
+        codeView.changeKeyboardType(.NumberPad)
     }
     
     func addCodeViewProgrammatically() {

@@ -59,7 +59,7 @@ class CharacterView: UIView {
 }
 
 class CodeView: UIView, UITextFieldDelegate {
-
+    
     var validateCode: ((String) -> ())?
     var codeCharacter : String!
     var numberOfCharacter : Int {
@@ -95,9 +95,13 @@ class CodeView: UIView, UITextFieldDelegate {
         self.init(frame: frame)
         self.numberOfCharacter = numberOfCharacter
     }
-
-    func enterCode() {
+    
+    func activeCodeView() {
         codeField.becomeFirstResponder()
+    }
+    
+    func changeKeyboardType(keyboardType: UIKeyboardType) {
+        codeField.keyboardType = keyboardType
     }
     
     private func setupView() {
@@ -139,9 +143,9 @@ class CodeView: UIView, UITextFieldDelegate {
     }
     
     private func calculateFirstLabelXBaseOnLabelWidth(width: CGFloat,
-                                              viewWidth: CGFloat,
-                                              numberOfCharacter: Int,
-                                              horizontalSpacing spacing: CGFloat) -> CGFloat {
+                                                      viewWidth: CGFloat,
+                                                      numberOfCharacter: Int,
+                                                      horizontalSpacing spacing: CGFloat) -> CGFloat {
         
         var labelX: CGFloat = width * CGFloat(numberOfCharacter)
         labelX += spacing * CGFloat(numberOfCharacter - 1)
@@ -183,7 +187,7 @@ class CodeView: UIView, UITextFieldDelegate {
         let character = characterViews[index]
         character.activate()
     }
-
+    
     private func markCodeEntered(index: Int) {
         guard index >= 0 && index < characterViews.count else { return }
         let character = characterViews[index]
@@ -218,7 +222,7 @@ class CodeView: UIView, UITextFieldDelegate {
             if let validateCode = validateCode {
                 validateCode(code)
             }
-            return false 
+            return false
         }
         
         return true
