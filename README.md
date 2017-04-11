@@ -1,21 +1,22 @@
-#Code Input View
+**Code Input View**
 
-####Purpose 
+**Purpose**
+
 Create a code input view to validate when forgot password or activate to complete registration. Try it now. 
 
 ![](http://recordit.co/kAuVq0Gs3V.gif)
 
-####Requirement 
+**Requirement**
 - Dynamic number of character, maybe 6 or 8, maximum is 12. 
 - Active the current character underline. 
 - Auto active/validate when enter enough character. 
 
-####Idea
+**Idea**
 - Create a custom view named `CharacterView` to display a code character with underline. 
 - Create an array of `CharacterView` with the number of character base on demand. 
 - Calculate and decrease the font size, the distance between 2 views to make sure all characters will be displayed at the center of the screen. 
 
-####How to use 
+**How to use**
 
 - Copy the `CodeView.swift` to your project
 - Use 1 of 3 ways: 
@@ -44,6 +45,6 @@ Create a code input view to validate when forgot password or activate to complet
 
 - You can change the underline color in struct `Color` in `CodeView.swift`
 
-####Improvement 
+**Improvement**
 - The code doesn't work good on iPhone 6+, the font size is a little small. 
 - The recursion code makes the performance down a lot. 
